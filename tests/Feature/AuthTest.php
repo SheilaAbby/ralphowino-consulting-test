@@ -14,7 +14,7 @@ class AuthTest extends TestCase
      * @return void
      */
     
-    public function user_can_login_with_valid_credentials(){
+    public function user_can_login_with_valid_credentials(){ //only a user with a valid email and password can log in
     	$user = factory(User::class)->create();
 
         $response = $this->post('/login', [
@@ -25,7 +25,8 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
 
     }
-    public function user_cannot_login_with_invalid_credentials(){
+
+    public function user_cannot_login_with_invalid_credentials(){//user with invalid credentials can not log in.Error messages are displayed
 
         $user = factory(User::class)->create();
 
@@ -39,7 +40,7 @@ class AuthTest extends TestCase
 
     }
 
-    public  function user_can_register_with_valid_credentials(){
+    public  function user_can_register_with_valid_credentials(){//requires valid email,name,password and confirmed password to register
     	$user = factory(User::class)->make();
 
         $response = $this->post('register', [
@@ -52,7 +53,8 @@ class AuthTest extends TestCase
         $response->assertStatus(302);
 
     }
-    public function user_cannot_register_with_existing_credentials(){
+    public function user_cannot_register_with_existing_credentials(){//a user can not register using details already existing in the database
+
     	$user = factory(User::class)->make();
 
         $response = $this->post('register', [
@@ -72,7 +74,7 @@ class AuthTest extends TestCase
         $response->assertStatus(200);
 
     }
-    public function user_can_reset_password_with_valid_code(){
+    public function user_can_reset_password_with_valid_code(){ //allows user to reset a new password.
 
         $user = factory(User::class)->create();
 
